@@ -34,13 +34,27 @@ $response = $client->put('http://www.swoft.org')->getResponse();
 $response = $client->delete('http://www.swoft.org')->getResponse();
 ```
 
-所有请求都基于 `request(string $method, string|UriInterface $uri, array $options)` 方法，如有非预置自定义方法请求，可以使用此方法自行构造
+所有请求都基于 `request(string $method, string|UriInterface $uri, array $options)` 方法，如有非预置自定义方法请求，可以使用此方法自行构造。`request` 方法中的第三个参数数组，还可以接受 `headers` 修改请求头，其对应 `get` 、 `post` 方法的第二个参数。
 ```php
 $method = 'GET';
 /** @var Response $response */
 $response = $client->request($method, '/', [
     'base_uri' => 'http://www.swoft.org',
 ])->getResponse();
+```
+
+另外，建议把请求包含在异常处理块里。如果请求错误（例如响应超时），Swoole 将会抛出异常，示例如下：
+```php
+try {
+    $result = (new \Swoft\HttpClient\Client())->get('http://www.swoft.org', [
+        'timeout' => 1,
+        'headers' => [
+            'Accept' => 'application/json',
+        ],
+    ])->getResult();
+} catch (\Exception $e) {
+    return [$e->getCode(), $e->getMessage()];
+}
 ```
 
 ## 并发请求
