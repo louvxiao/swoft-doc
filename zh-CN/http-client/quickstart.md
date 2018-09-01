@@ -11,13 +11,15 @@ $client = new Client([
     'timeout' => 2,
 ]);
 ```
-Client 的构造方法接受一个 Options 数组，用于配置客户端，以为为各个参数的说明。
+Client 的构造方法接受一个 Options 数组，用于配置客户端，以下为各个参数的说明。
 
-`base_uri` ( string | UriInterface ) 基础的 URI，将用户后续的请求，将与 request($uri) 的 $uri 合并成一个完整的 URI
+`base_uri` ( string | UriInterface ) 基础的 URI，将用户后续的请求，将与 request($uri) 的 $uri 合并成一个完整的 URI；
 
-`timeout` ( int | float ) 设置请求的超时时间，单位为秒
+`timeout` ( int | float ) 设置请求的超时时间，单位为秒；
 
-`adapter` ( string ) 设置指定的客户端适配器，可选参数包括 `co`, `curl`，`co` 指使用 Swoole 提供的协程 HTTP 客户端作为驱动，`curl` 指使用 CURL扩展 作为驱动
+`adapter` ( string ) 设置指定的客户端适配器，可选参数包括 `co`, `curl`，`co` 指使用 Swoole 提供的协程 HTTP 客户端作为驱动，`curl` 指使用 CURL扩展 作为驱动；
+
+`headers` ( array ) 设置请求头。
 
 ## 发送一个请求
 
